@@ -69,7 +69,7 @@ function cargaCiudades(codPais, codDpto, element){
 
 function appendResultado(cadena){
     let cosola = document.getElementById('consola');
-    cosola.value = cosola.value + cadena + ',\n';   
+    cosola.value = cosola.value + cadena + '\n';   
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let selCiudades = document.getElementById('ciudades');
     let btnGenerar = document.getElementById('btnGenerar');
     let btnAnalizar = document.getElementById('analizar');
+    let btnAJAX = document.getElementById('ajax');
         
     selPaises.addEventListener('change',(event)=>{
         cargaDptos(event.target.value,document.getElementById('dptos'));
@@ -114,5 +115,9 @@ document.addEventListener('DOMContentLoaded',()=>{
         } catch (error) {
             appendResultado(error.message);            
         }
+    });
+
+    btnAJAX.addEventListener('click',(event)=>{
+        
     });
 });
