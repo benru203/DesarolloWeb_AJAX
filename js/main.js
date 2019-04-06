@@ -72,6 +72,35 @@ function appendResultado(cadena){
     cosola.value = cosola.value + cadena + '\n';   
 }
 
+function cargarAjax(){
+    let httpRequest = new XMLHttpRequest();
+
+    httpRequest.onreadystatechange = ()=>{
+
+        if(httpRequest.readyState === XMLHttpRequest.DONE){
+            if(httpRequest.status == 200){
+                let data =  httpRequest.responseText;
+                if(data){
+                    appendResultado(data);
+                    let obj = JSON.parse(data);
+                    let tbody =  document.querySelector('tbody');
+                    let datos = "";
+                    obj.forEach((element, index)=>{
+                        datos = datos + "<tr><td>"+element.id+"</td><td>"+element.name+"</td><td>"+element.username+"</td><td>"+element.email+"</td><td>"+element.address.street+"</td><td>"+element.phone+"</td></tr>";
+                    });
+                    tbody.innerHTML = datos;
+                }
+            }else{
+                appendResultado('Algo ha fallado respuesta:' + httpRequest.status);
+            }
+        }else{
+            appendResultado('Esperando respuesta....');
+        }    
+    }
+    httpRequest.open('GET','https://jsonplaceholder.typicode.com/users',true);
+    httpRequest.send();
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
     
     let selPaises  = document.getElementById('paises');
@@ -118,6 +147,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
 
     btnAJAX.addEventListener('click',(event)=>{
-        
+        cargarAjax();        
     });
 });
